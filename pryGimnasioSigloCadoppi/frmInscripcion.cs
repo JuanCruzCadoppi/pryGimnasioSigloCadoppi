@@ -10,20 +10,43 @@ namespace pryGimnasioSigloCadoppi
 {
     public partial class frmInscripcion : Form
     {
+        // Declaración de constantes 
+        const decimal PRECIO_MUSCULACION = 15000;
+        const decimal PRECIO_FUNCIONAL = 18000;
+        const decimal PRECIO_NATACION = 22000;
+        const decimal PRECIO_CASILLERO = 3000;
+        const int EDAD_MINIMA = 14;
+        const decimal RECARGO_TARJETA_3_CUOTAS = 0.10m;
+        const decimal RECARGO_TARJETA_6_CUOTAS = 0.20m;
+
         public frmInscripcion()
         {
             InitializeComponent();
         }
 
+        private void EstadoInicial()
+        {
+            // Valores por defecto
+            txtNombre.Clear();
+            txtEdad.Clear();
+            chkCasillero.Checked = false;
+            chkEstudiante.Checked = false;
+            cboPlan.SelectedIndex = 0;
+            cboTurno.SelectedIndex = 0;
+            txtMeses.Text = "1";
+            rbEfectivo.Checked = true;
+            cboCuotas.Enabled = false;
+            btnCalcular.Enabled = false;
+            txtNombre.Focus();
+        }
+
         private void frmInscripcion_Load(object sender, EventArgs e)
         {
-         
+            // Agregar los items a los comboBox
 
-            //Carga de opciones comboBox
-
-            cboPlan.Items.Add("Musculación $15.000");
-            cboPlan.Items.Add("Funcional $18.000");
-            cboPlan.Items.Add("Natación $22.000");
+            cboPlan.Items.Add("Musculación");
+            cboPlan.Items.Add("Funcional");
+            cboPlan.Items.Add("Natación");
 
             cboTurno.Items.Add("Mañana (7 a 12 hs)");
             cboTurno.Items.Add("Tarde ( 14 a 18 hs)");
@@ -32,17 +55,177 @@ namespace pryGimnasioSigloCadoppi
             cboCuotas.Items.Add("1 cuota sin recargo");
             cboCuotas.Items.Add("3 cuotas +10%");
             cboCuotas.Items.Add("6 cuotas +20%");
+            EstadoInicial();
+        }
 
-            // Set default selected index for combo boxes
+        private void rbTarjeta_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbTarjeta.Checked == true)
+            {
+                cboCuotas.Enabled = true;
+                cboCuotas.SelectedIndex = 0;
+            }
+            else
+            {
+                cboCuotas.Enabled = false;
+                cboCuotas.SelectedIndex = -1;
+            }
+        }
 
-            cboPlan.SelectedIndex = 0;
-            cboTurno.SelectedIndex = 0;
+        //Evento para que solo se puedan ingresar números en el TextBox txtMeses y txtEdad
 
-            rbEfectivo.Checked = true;
+        private void txt_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if ((e.KeyChar >= 48 && e.KeyChar <= 57) || e.KeyChar == 8)
+            {
+                e.Handled = false;
+            }
+            else
+            {
+                e.Handled = true;
+            }
+        }
 
-            cboCuotas.Enabled = false;
-            btnCalcular.Enabled = false;
+        //Eventos para activar el botón calcular cuando se ingresan los datos en los TextBox
+        private void txt_TextChanged(object sender, EventArgs e)
+        {
+            if (txtNombre.Text != "" && txtEdad.Text != "" && txtMeses.Text != "")
+            {
+                btnCalcular.Enabled = true;
+            }
+            else
+            {
+                btnCalcular.Enabled = false;
+            }
+        }
+
+    
+
+        private void btnCalcular_Click(object sender, EventArgs e)
+        {
+
+            string nombre = txtNombre.Text;
+            string planElegido = cboPlan.Text;
+            string horarioElegido;
+            int edad = int.Parse(txtEdad.Text);
+            int meses = int.Parse(txtMeses.Text);
+            decimal precioMensual = 0;
+            decimal subtotal = 0;
+            decimal porcentajeDescuento = 0;
+            decimal porcentajeAjuste = 0;
+            decimal total = 0;
+            decimal valorCuota = 0;
+
+            //Evento para calcular el total a pagar y mostrar un mensaje de error si la edad es
+            //menor a 14 años o si el número de meses es menor a 1 o mayor a 12
+
+            if (edad < 14)
+            {
+                MessageBox.Show("La edad mínima para inscribirse es de 14 años.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (meses < 1 || meses > 12)
+            {
+                MessageBox.Show("El número de meses debe estar entre 1 y 12.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            switch (planElegido)
+            {
+                case "Musculación":
+                    precioMensual = PRECIO_MUSCULACION;
+                    break;
+                case "Funcional":
+                    precioMensual = PRECIO_FUNCIONAL;
+                    break;
+                case "Natación":
+                    precioMensual = PRECIO_NATACION;
+                    break;
+
+                default:
+                    MessageBox.Show("Debe seleccionar un plan.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+            }
+
+            switch (cboTurno.SelectedIndex)
+            {
+                case 0:
+                    horarioElegido = "Mañana (7 a 12 hs)";
+                    break;
+                case 1:
+                    horarioElegido = "Tarde (14 a 18 hs)";
+                    break;
+                case 2:
+                    horarioElegido = "Noche (18 a 23 hs)";
+                    break;
+                default:
+                    MessageBox.Show("Debe seleccionar un turno.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+            }
+
+            if (chkCasillero.Checked) precioMensual = precioMensual + PRECIO_CASILLERO;
            
+           subtotal = precioMensual * meses;
+
+            if (edad < 18)
+            {
+                porcentajeDescuento = 0.25m;
+                subtotal = subtotal - (subtotal * porcentajeDescuento);
+            }
+            else if (edad > 65)
+            {
+                porcentajeDescuento = 0.30m;
+                subtotal = subtotal - (subtotal * porcentajeDescuento);
+
+            }
+            else if (chkEstudiante.Checked)
+            {
+                porcentajeDescuento = 0.15m;
+                subtotal = subtotal - (subtotal * porcentajeDescuento);
+            }
+            else
+            {
+                porcentajeDescuento = 0;
+                subtotal = subtotal - (subtotal * porcentajeDescuento);
+            }
+
+
+            if (rbEfectivo.Checked)
+            {
+                porcentajeAjuste = 0.1m;
+                subtotal = subtotal - (subtotal * porcentajeAjuste);
+            }
+            else if (rbTarjeta.Checked)
+            {
+                switch (cboCuotas.SelectedIndex)
+                {
+                    case 0:
+                        porcentajeAjuste = 0;
+                        subtotal = subtotal + (subtotal * porcentajeAjuste);
+                        break;
+                    case 1:
+                        porcentajeAjuste = RECARGO_TARJETA_3_CUOTAS;
+                        subtotal = subtotal + (subtotal * porcentajeAjuste);
+                        break;
+                    case 2:
+                        porcentajeAjuste = RECARGO_TARJETA_6_CUOTAS;
+                        subtotal = subtotal + (subtotal * porcentajeAjuste);
+                        break;
+                    default:
+                        MessageBox.Show("Debe seleccionar un número de cuotas.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                }
+            }
+
+
+
+            MessageBox.Show($"Total a pagar: ${subtotal:F2}", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+        }
+
+        private void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            EstadoInicial();
         }
     }
 }

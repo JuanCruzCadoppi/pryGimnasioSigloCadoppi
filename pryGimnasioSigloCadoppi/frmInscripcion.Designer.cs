@@ -85,14 +85,18 @@
             txtEdad.Name = "txtEdad";
             txtEdad.Size = new Size(72, 23);
             txtEdad.TabIndex = 1;
+            txtEdad.TextChanged += txt_TextChanged;
+            txtEdad.KeyPress += txt_KeyPress;
             // 
             // txtNombre
             // 
+            txtNombre.CharacterCasing = CharacterCasing.Upper;
             txtNombre.Location = new Point(85, 43);
             txtNombre.MaxLength = 30;
             txtNombre.Name = "txtNombre";
             txtNombre.Size = new Size(207, 23);
             txtNombre.TabIndex = 0;
+            txtNombre.TextChanged += txt_TextChanged;
             // 
             // lblEdad
             // 
@@ -154,6 +158,8 @@
             txtMeses.Name = "txtMeses";
             txtMeses.Size = new Size(72, 23);
             txtMeses.TabIndex = 1;
+            txtMeses.TextChanged += txt_TextChanged;
+            txtMeses.KeyPress += txt_KeyPress;
             // 
             // cboPlan
             // 
@@ -201,6 +207,7 @@
             rbTarjeta.TabStop = true;
             rbTarjeta.Text = "Tarjeta";
             rbTarjeta.UseVisualStyleBackColor = true;
+            rbTarjeta.CheckedChanged += rbTarjeta_CheckedChanged;
             // 
             // rbEfectivo
             // 
@@ -250,6 +257,7 @@
             btnCalcular.TabIndex = 0;
             btnCalcular.Text = "Calcular";
             btnCalcular.UseVisualStyleBackColor = true;
+            btnCalcular.Click += btnCalcular_Click;
             // 
             // btnLimpiar
             // 
@@ -259,6 +267,7 @@
             btnLimpiar.TabIndex = 10;
             btnLimpiar.Text = "Limpiar";
             btnLimpiar.UseVisualStyleBackColor = true;
+            btnLimpiar.Click += btnLimpiar_Click;
             // 
             // frmInscripcion
             // 
