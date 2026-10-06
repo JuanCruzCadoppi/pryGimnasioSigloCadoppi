@@ -81,7 +81,7 @@
             // txtEdad
             // 
             txtEdad.Location = new Point(85, 83);
-            txtEdad.MaxLength = 3;
+            txtEdad.MaxLength = 2;
             txtEdad.Name = "txtEdad";
             txtEdad.Size = new Size(72, 23);
             txtEdad.TabIndex = 1;
@@ -184,7 +184,7 @@
             lblTurno.AutoSize = true;
             lblTurno.Location = new Point(18, 113);
             lblTurno.Name = "lblTurno";
-            lblTurno.Size = new Size(38, 15);
+            lblTurno.Size = new Size(39, 15);
             lblTurno.TabIndex = 1;
             lblTurno.Text = "Turno";
             // 
@@ -202,7 +202,7 @@
             rbTarjeta.AutoSize = true;
             rbTarjeta.Location = new Point(134, 32);
             rbTarjeta.Name = "rbTarjeta";
-            rbTarjeta.Size = new Size(59, 19);
+            rbTarjeta.Size = new Size(60, 19);
             rbTarjeta.TabIndex = 1;
             rbTarjeta.TabStop = true;
             rbTarjeta.Text = "Tarjeta";

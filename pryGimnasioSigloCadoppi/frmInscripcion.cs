@@ -109,6 +109,7 @@ namespace pryGimnasioSigloCadoppi
             string horarioElegido;
             int edad = int.Parse(txtEdad.Text);
             int meses = int.Parse(txtMeses.Text);
+            int cuotas;
             decimal precioMensual = 0;
             decimal subtotal = 0;
             decimal porcentajeDescuento = 0;
@@ -130,6 +131,8 @@ namespace pryGimnasioSigloCadoppi
                 return;
             }
 
+            // Estructura para guardar plan elegido
+
             switch (planElegido)
             {
                 case "Musculación":
@@ -147,6 +150,8 @@ namespace pryGimnasioSigloCadoppi
                     return;
             }
 
+            //Estructura para guardar horario elegido
+
             switch (cboTurno.SelectedIndex)
             {
                 case 0:
@@ -163,9 +168,13 @@ namespace pryGimnasioSigloCadoppi
                     return;
             }
 
+            //Validación de casillero seleccionado
+
             if (chkCasillero.Checked) precioMensual = precioMensual + PRECIO_CASILLERO;
            
            subtotal = precioMensual * meses;
+
+            //Validación para aplicar descuento correspondiente
 
             if (edad < 18)
             {
@@ -219,7 +228,9 @@ namespace pryGimnasioSigloCadoppi
 
 
 
-            MessageBox.Show($"Total a pagar: ${subtotal:F2}", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show($"Total a pagar: ${subtotal:F2}", "Registro Exitoso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            EstadoInicial();
 
         }
 
