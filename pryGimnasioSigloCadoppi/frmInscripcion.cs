@@ -19,6 +19,20 @@ namespace pryGimnasioSigloCadoppi
         const decimal RECARGO_TARJETA_3_CUOTAS = 0.10m;
         const decimal RECARGO_TARJETA_6_CUOTAS = 0.20m;
 
+        // Estructura para almacenar los datos del socio
+        struct SOCIO
+        {
+            public string nombre;
+            public int edad;
+            public string categoria;
+            public string plan;
+            public string horarioElegido;
+            public int meses;
+            public string formaPago;
+            public decimal total;
+            public decimal valorCuota;
+        }
+
         public frmInscripcion()
         {
             InitializeComponent();
@@ -58,6 +72,7 @@ namespace pryGimnasioSigloCadoppi
             EstadoInicial();
         }
 
+        //Evento para habilitar o deshabilitar el comboBox de cuotas según la opción de pago seleccionada
         private void rbTarjeta_CheckedChanged(object sender, EventArgs e)
         {
             if (rbTarjeta.Checked == true)
@@ -73,7 +88,6 @@ namespace pryGimnasioSigloCadoppi
         }
 
         //Evento para que solo se puedan ingresar números en el TextBox txtMeses y txtEdad
-
         private void txt_KeyPress(object sender, KeyPressEventArgs e)
         {
             if ((e.KeyChar >= 48 && e.KeyChar <= 57) || e.KeyChar == 8)
@@ -99,8 +113,6 @@ namespace pryGimnasioSigloCadoppi
             }
         }
 
-    
-
         private void btnCalcular_Click(object sender, EventArgs e)
         {
 
@@ -117,10 +129,9 @@ namespace pryGimnasioSigloCadoppi
             decimal total = 0;
             decimal valorCuota = 0;
 
-            //Evento para calcular el total a pagar y mostrar un mensaje de error si la edad es
-            //menor a 14 años o si el número de meses es menor a 1 o mayor a 12
+            //Mostrar un mensaje de error si la edad es menor a 14 años o si el número de meses es menor a 1 o mayor a 12
 
-            if (edad < 14)
+            if (edad < EDAD_MINIMA)
             {
                 MessageBox.Show("La edad mínima para inscribirse es de 14 años.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -198,7 +209,7 @@ namespace pryGimnasioSigloCadoppi
                 total = subtotal - (subtotal * porcentajeDescuento);
             }
 
-            //Validación para aplicar recargo correspondiente con tarjeta de credito
+            //Validación para aplicar recargo correspondiente con tarjeta de crédito
             //y número de cuotas seleccionadas
 
             if (rbEfectivo.Checked)
@@ -213,7 +224,6 @@ namespace pryGimnasioSigloCadoppi
                     case 0:
                         porcentajeAjuste = 0;
                         cuotas = 1;
-                        total = total + (total * porcentajeAjuste);
                         break;
                     case 1:
                         porcentajeAjuste = RECARGO_TARJETA_3_CUOTAS;
@@ -225,13 +235,14 @@ namespace pryGimnasioSigloCadoppi
                         cuotas = 6;
                         total = total + (total * porcentajeAjuste);
                         break;
-                    default:
-                        MessageBox.Show("Debe seleccionar un número de cuotas.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
                 }
             }
 
+            //Validación para determinar la categoría del socio según su edad
+
             string categoria = edad < 18 ? "Menor" : "Mayor";
+
+            // Validación para determinar la forma de pago y el valor de la cuota según la opción seleccionada
 
             string formaPago = rbEfectivo.Checked
                 ? "Efectivo"
@@ -241,12 +252,52 @@ namespace pryGimnasioSigloCadoppi
                 ? total
                 : total / cuotas;
 
+            // Creación de la variable socio con los datos ingresados y calculados
+
+            var socio = new SOCIO();
+
+            socio.nombre = nombre;
+            socio.edad = edad;
+            socio.categoria = categoria;
+            socio.plan = planElegido;
+            socio.horarioElegido = horarioElegido;
+            socio.meses = meses;
+            socio.formaPago = formaPago;
+            socio.total = total;
+            socio.valorCuota = valorCuota;
 
 
+            string mensaje = "";
 
+            if (rbTarjeta.Checked)
+            {
+                mensaje =
+                    "Nombre: " + socio.nombre + "\n" +  
+                    "Edad: " + socio.edad + " años\n" +
+                    "Categoría: " + socio.categoria + "\n" +
+                    "Plan: " + socio.plan + "\n" +
+                    "Horario: " + socio.horarioElegido + "\n" +
+                    "Meses: " + socio.meses + "\n" +
+                    "Forma de pago: " + socio.formaPago + "\n\n" +
+                    "Total a pagar: " + socio.total + "\n" + 
+                    "Valor de cuota: " + socio.valorCuota; ;
+            }
+            else
+            {
+                mensaje =
+                    "Nombre: " + socio.nombre + "\n" +
+                    "Edad: " + socio.edad + " años\n" +
+                    "Categoría: " + socio.categoria + "\n" +
+                    "Plan: " + socio.plan + "\n" +
+                    "Horario: " + socio.horarioElegido + "\n" +
+                    "Meses: " + socio.meses + "\n" +
+                    "Forma de pago: " + socio.formaPago + "\n\n" +
+                    "Total a pagar: " + socio.total + "\n";
+            }
 
-            MessageBox.Show($"SubTotal ${subtotal}Total a pagar: ${total:F2} Cuota: ${valorCuota:F2}", "Registro Exitoso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(mensaje, "Resumen Inscripción", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+            
             EstadoInicial();
 
         }

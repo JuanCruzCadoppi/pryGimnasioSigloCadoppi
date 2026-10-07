@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmInscripcion));
             grpDatosPersonales = new GroupBox();
             chkEstudiante = new CheckBox();
             txtEdad = new TextBox();
@@ -184,7 +185,7 @@
             lblTurno.AutoSize = true;
             lblTurno.Location = new Point(18, 113);
             lblTurno.Name = "lblTurno";
-            lblTurno.Size = new Size(39, 15);
+            lblTurno.Size = new Size(38, 15);
             lblTurno.TabIndex = 1;
             lblTurno.Text = "Turno";
             // 
@@ -202,7 +203,7 @@
             rbTarjeta.AutoSize = true;
             rbTarjeta.Location = new Point(134, 32);
             rbTarjeta.Name = "rbTarjeta";
-            rbTarjeta.Size = new Size(60, 19);
+            rbTarjeta.Size = new Size(59, 19);
             rbTarjeta.TabIndex = 1;
             rbTarjeta.TabStop = true;
             rbTarjeta.Text = "Tarjeta";
@@ -282,6 +283,7 @@
             Controls.Add(grpDatosPersonales);
             Controls.Add(lblFormaPago);
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             Name = "frmInscripcion";
             StartPosition = FormStartPosition.CenterScreen;
