@@ -109,7 +109,7 @@ namespace pryGimnasioSigloCadoppi
             string horarioElegido;
             int edad = int.Parse(txtEdad.Text);
             int meses = int.Parse(txtMeses.Text);
-            int cuotas;
+            int cuotas = 1;
             decimal precioMensual = 0;
             decimal subtotal = 0;
             decimal porcentajeDescuento = 0;
@@ -173,36 +173,38 @@ namespace pryGimnasioSigloCadoppi
             if (chkCasillero.Checked) precioMensual = precioMensual + PRECIO_CASILLERO;
            
            subtotal = precioMensual * meses;
-
+        
             //Validación para aplicar descuento correspondiente
 
             if (edad < 18)
             {
                 porcentajeDescuento = 0.25m;
-                subtotal = subtotal - (subtotal * porcentajeDescuento);
+                total = subtotal - (subtotal * porcentajeDescuento);
             }
-            else if (edad > 65)
+            else if (edad >= 65)
             {
                 porcentajeDescuento = 0.30m;
-                subtotal = subtotal - (subtotal * porcentajeDescuento);
+                total = subtotal - (subtotal * porcentajeDescuento);
 
             }
             else if (chkEstudiante.Checked)
             {
                 porcentajeDescuento = 0.15m;
-                subtotal = subtotal - (subtotal * porcentajeDescuento);
+                total = subtotal - (subtotal * porcentajeDescuento);
             }
             else
             {
                 porcentajeDescuento = 0;
-                subtotal = subtotal - (subtotal * porcentajeDescuento);
+                total = subtotal - (subtotal * porcentajeDescuento);
             }
 
+            //Validación para aplicar recargo correspondiente con tarjeta de credito
+            //y número de cuotas seleccionadas
 
             if (rbEfectivo.Checked)
             {
                 porcentajeAjuste = 0.1m;
-                subtotal = subtotal - (subtotal * porcentajeAjuste);
+                total = total - (total * porcentajeAjuste);
             }
             else if (rbTarjeta.Checked)
             {
@@ -210,15 +212,18 @@ namespace pryGimnasioSigloCadoppi
                 {
                     case 0:
                         porcentajeAjuste = 0;
-                        subtotal = subtotal + (subtotal * porcentajeAjuste);
+                        cuotas = 1;
+                        total = total + (total * porcentajeAjuste);
                         break;
                     case 1:
                         porcentajeAjuste = RECARGO_TARJETA_3_CUOTAS;
-                        subtotal = subtotal + (subtotal * porcentajeAjuste);
+                        cuotas = 3;
+                        total = total + (total * porcentajeAjuste);
                         break;
                     case 2:
                         porcentajeAjuste = RECARGO_TARJETA_6_CUOTAS;
-                        subtotal = subtotal + (subtotal * porcentajeAjuste);
+                        cuotas = 6;
+                        total = total + (total * porcentajeAjuste);
                         break;
                     default:
                         MessageBox.Show("Debe seleccionar un número de cuotas.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -226,9 +231,21 @@ namespace pryGimnasioSigloCadoppi
                 }
             }
 
+            string categoria = edad < 18 ? "Menor" : "Mayor";
+
+            string formaPago = rbEfectivo.Checked
+                ? "Efectivo"
+                : "Tarjeta en " + cuotas + " cuotas";
+
+            valorCuota = rbEfectivo.Checked
+                ? total
+                : total / cuotas;
 
 
-            MessageBox.Show($"Total a pagar: ${subtotal:F2}", "Registro Exitoso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+
+
+            MessageBox.Show($"SubTotal ${subtotal}Total a pagar: ${total:F2} Cuota: ${valorCuota:F2}", "Registro Exitoso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             EstadoInicial();
 
