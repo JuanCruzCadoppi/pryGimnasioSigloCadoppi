@@ -50,6 +50,7 @@
             cboCuotas = new ComboBox();
             btnCalcular = new Button();
             btnLimpiar = new Button();
+            btnConsultar = new Button();
             grpDatosPersonales.SuspendLayout();
             grpPlan.SuspendLayout();
             grpFormaPago.SuspendLayout();
@@ -185,7 +186,7 @@
             lblTurno.AutoSize = true;
             lblTurno.Location = new Point(18, 113);
             lblTurno.Name = "lblTurno";
-            lblTurno.Size = new Size(38, 15);
+            lblTurno.Size = new Size(39, 15);
             lblTurno.TabIndex = 1;
             lblTurno.Text = "Turno";
             // 
@@ -203,7 +204,7 @@
             rbTarjeta.AutoSize = true;
             rbTarjeta.Location = new Point(134, 32);
             rbTarjeta.Name = "rbTarjeta";
-            rbTarjeta.Size = new Size(59, 19);
+            rbTarjeta.Size = new Size(60, 19);
             rbTarjeta.TabIndex = 1;
             rbTarjeta.TabStop = true;
             rbTarjeta.Text = "Tarjeta";
@@ -270,12 +271,23 @@
             btnLimpiar.UseVisualStyleBackColor = true;
             btnLimpiar.Click += btnLimpiar_Click;
             // 
+            // btnConsultar
+            // 
+            btnConsultar.Location = new Point(22, 410);
+            btnConsultar.Name = "btnConsultar";
+            btnConsultar.Size = new Size(75, 23);
+            btnConsultar.TabIndex = 11;
+            btnConsultar.Text = "Consultar";
+            btnConsultar.UseVisualStyleBackColor = true;
+            btnConsultar.Click += btnConsultar_Click;
+            // 
             // frmInscripcion
             // 
             AcceptButton = btnCalcular;
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(356, 447);
+            Controls.Add(btnConsultar);
             Controls.Add(btnLimpiar);
             Controls.Add(btnCalcular);
             Controls.Add(grpFormaPago);
@@ -325,5 +337,6 @@
         private Button btnCalcular;
         private Button btnLimpiar;
         private ComboBox cboTurno;
+        private Button btnConsultar;
     }
 }

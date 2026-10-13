@@ -19,6 +19,11 @@ namespace pryGimnasioSigloCadoppi
         const decimal RECARGO_TARJETA_3_CUOTAS = 0.10m;
         const decimal RECARGO_TARJETA_6_CUOTAS = 0.20m;
 
+        //Declarar un ARRAY 1 dimensión - vector
+
+        public string[] arrayClientes = new string[3];
+        int indiceClientes = 0;
+
         // Estructura para almacenar los datos del socio
         struct SOCIO
         {
@@ -182,9 +187,9 @@ namespace pryGimnasioSigloCadoppi
             //Validación de casillero seleccionado
 
             if (chkCasillero.Checked) precioMensual = precioMensual + PRECIO_CASILLERO;
-           
-           subtotal = precioMensual * meses;
-        
+
+            subtotal = precioMensual * meses;
+
             //Validación para aplicar descuento correspondiente
 
             if (edad < 18)
@@ -272,14 +277,14 @@ namespace pryGimnasioSigloCadoppi
             if (rbTarjeta.Checked)
             {
                 mensaje =
-                    "Nombre: " + socio.nombre + "\n" +  
+                    "Nombre: " + socio.nombre + "\n" +
                     "Edad: " + socio.edad + " años\n" +
                     "Categoría: " + socio.categoria + "\n" +
                     "Plan: " + socio.plan + "\n" +
                     "Horario: " + socio.horarioElegido + "\n" +
                     "Meses: " + socio.meses + "\n" +
                     "Forma de pago: " + socio.formaPago + "\n\n" +
-                    "Total a pagar: " + socio.total + "\n" + 
+                    "Total a pagar: " + socio.total + "\n" +
                     "Valor de cuota: " + socio.valorCuota; ;
             }
             else
@@ -297,14 +302,30 @@ namespace pryGimnasioSigloCadoppi
 
             MessageBox.Show(mensaje, "Resumen Inscripción", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-            
-            EstadoInicial();
+            //grabar en array 1 dimensión
 
+            arrayClientes[indiceClientes] = mensaje;
+            indiceClientes++;
+
+            if (indiceClientes == arrayClientes.Length)
+            {
+                btnCalcular.Enabled = false;
+            }
+
+            EstadoInicial();
         }
 
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
             EstadoInicial();
+        }
+
+        private void btnConsultar_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            frmConsulta consulta = new frmConsulta(arrayClientes);
+            consulta.ShowDialog();
+            this.Show();
         }
     }
 }
