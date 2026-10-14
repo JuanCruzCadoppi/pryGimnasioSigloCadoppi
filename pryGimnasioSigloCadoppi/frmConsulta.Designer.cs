@@ -39,7 +39,7 @@
             lstConsulta.FormattingEnabled = true;
             lstConsulta.Location = new Point(12, 12);
             lstConsulta.Name = "lstConsulta";
-            lstConsulta.Size = new Size(509, 184);
+            lstConsulta.Size = new Size(507, 184);
             lstConsulta.TabIndex = 0;
             // 
             // btnVolver

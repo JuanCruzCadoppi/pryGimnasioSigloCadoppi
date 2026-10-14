@@ -31,7 +31,7 @@ namespace pryGimnasioSigloCadoppi
             for (int i = 0; i < clientes.Length; i++)
             {
                 if (!string.IsNullOrEmpty(clientes[i])){
-                    lstConsulta.Items.Add(clientes[i]);
+                    lstConsulta.Items.Add(clientes[i].Replace("\n"," | "));
                 }
             }
         }

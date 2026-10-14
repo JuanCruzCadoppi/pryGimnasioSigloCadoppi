@@ -16,8 +16,8 @@ namespace pryGimnasioSigloCadoppi
         const decimal PRECIO_NATACION = 22000;
         const decimal PRECIO_CASILLERO = 3000;
         const int EDAD_MINIMA = 14;
-        const decimal RECARGO_TARJETA_3_CUOTAS = 0.10m;
-        const decimal RECARGO_TARJETA_6_CUOTAS = 0.20m;
+        const decimal RECARGO_TARJETA_3_CUOTAS = 0.1m;
+        const decimal RECARGO_TARJETA_6_CUOTAS = 0.2m;
 
         //Declarar un ARRAY 1 dimensión - vector
 
