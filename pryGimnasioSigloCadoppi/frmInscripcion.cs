@@ -74,6 +74,7 @@ namespace pryGimnasioSigloCadoppi
             cboCuotas.Items.Add("1 cuota sin recargo");
             cboCuotas.Items.Add("3 cuotas +10%");
             cboCuotas.Items.Add("6 cuotas +20%");
+
             EstadoInicial();
         }
 

@@ -37,6 +37,7 @@
             // lstConsulta
             // 
             lstConsulta.FormattingEnabled = true;
+            lstConsulta.HorizontalScrollbar = true;
             lstConsulta.Location = new Point(12, 12);
             lstConsulta.Name = "lstConsulta";
             lstConsulta.Size = new Size(507, 184);
