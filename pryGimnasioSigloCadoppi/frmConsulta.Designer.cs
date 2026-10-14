@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmConsulta));
             lstConsulta = new ListBox();
             btnVolver = new Button();
             btnVer = new Button();
@@ -65,11 +66,12 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(533, 239);
+            ClientSize = new Size(529, 239);
             Controls.Add(btnVer);
             Controls.Add(btnVolver);
             Controls.Add(lstConsulta);
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             Name = "frmConsulta";
             StartPosition = FormStartPosition.CenterParent;

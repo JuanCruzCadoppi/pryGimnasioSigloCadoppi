@@ -108,7 +108,7 @@ namespace pryGimnasioSigloCadoppi
         //Eventos para activar el botón calcular cuando se ingresan los datos en los TextBox
         private void txt_TextChanged(object sender, EventArgs e)
         {
-            if (txtNombre.Text != "" && txtEdad.Text != "" && txtMeses.Text != "")
+            if (txtNombre.Text != "" && txtEdad.Text != "" && txtMeses.Text != "" && indiceClientes < arrayClientes.Length)
             {
                 btnCalcular.Enabled = true;
             }
@@ -304,13 +304,8 @@ namespace pryGimnasioSigloCadoppi
 
             //grabar en array 1 dimensión
 
-            arrayClientes[indiceClientes] = mensaje;
-            indiceClientes++;
-
-            if (indiceClientes == arrayClientes.Length)
-            {
-                btnCalcular.Enabled = false;
-            }
+                arrayClientes[indiceClientes] = mensaje;
+                indiceClientes++;         
 
             EstadoInicial();
         }

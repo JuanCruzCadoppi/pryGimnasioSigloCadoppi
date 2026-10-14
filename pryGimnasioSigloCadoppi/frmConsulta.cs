@@ -26,6 +26,8 @@ namespace pryGimnasioSigloCadoppi
 
         private void btnVer_Click(object sender, EventArgs e)
         {
+            lstConsulta.Items.Clear();
+
             for (int i = 0; i < clientes.Length; i++)
             {
                 if (!string.IsNullOrEmpty(clientes[i])){
